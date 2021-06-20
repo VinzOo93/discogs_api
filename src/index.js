@@ -70,9 +70,7 @@ export default class App extends React.Component {
     togglePopup = (e) => {
         this.setState({
             seen: !this.state.seen
-        })
-        const onClick = () => {
-        }
+        });
         console.log(e)
     }
 
