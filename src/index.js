@@ -2,11 +2,20 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
+import  ReactPaginate from  'react-paginate';
 
 class App extends React.Component {
 
-    state = {
-        artists: []
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            type: "release",
+            currentPage: 1,
+            pages: 5,
+            per_page: 25,
+            data: [],
+        };
     }
 
 
@@ -26,15 +35,32 @@ class App extends React.Component {
                         console.log(result);
                     }
                 )*/
-        artists = db.search('', 'artist');
+        artists = db.search('', {type: this.state.type, page: this.state.currentPage , pages: this.state.pages, per_page: this.state.per_page});
         artists.then((result) => {
             this.setState({
-                artists: result.results,
+               data: result.results,
             });
-            console.log(this.state.artists)
+            console.log(this.state.data)
+            console.log(this.state.pages)
+
+
         }).catch(err => console.log(err))
 
 
+    }
+
+    handlePageClick = (e) => {
+        const selectedPage = e.selected;
+        const currentPage = selectedPage * this.state.per_page;
+
+
+        this.setState({
+            currentPage: selectedPage,
+
+        }, () => {
+            this.componentDidMount()
+        }
+        )
     }
 
     render() {
@@ -46,13 +72,28 @@ class App extends React.Component {
                 </header>
 
                 {
-                    this.state.artists.map(
+                    this.state.data.map(
                         artist => (
                             <article>
                                 <h3>{artist.title}</h3>
                             </article>)
                     )
                 }
+                <footer>
+                    <ReactPaginate
+                        previousLabel={"prev"}
+                        nextLabel={"next"}
+                        breakLabel={"..."}
+                        breakClassName={"break-me"}
+                        pageCount={this.state.pageCount}
+                        marginPagesDisplayed={2}
+                        pageRangeDisplayed={5}
+                        onPageChange={this.handlePageClick}
+                        containerClassName={"pagination"}
+                        subContainerClassName={"pages pagination"}
+                        activeClassName={"active"}
+                    />
+                </footer>
             < /div>
 
         );
