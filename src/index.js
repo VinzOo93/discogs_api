@@ -1,24 +1,26 @@
-import React from 'react';
+import React  from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 import  ReactPaginate from  'react-paginate';
+import Popup from "./Popup";
 
-class App extends React.Component {
+export default class App extends React.Component {
 
 
     constructor(props) {
         super(props);
         this.state = {
             type: "release",
-            currentPage: 1,
-            pages: 5,
+            currentPage: 0,
+            pages: 10,
             per_page: 25,
             data: [],
+            seen: false,
         };
+        this.togglePopup = this.togglePopup.bind(this)
+
     }
-
-
     componentDidMount() {
         const Discogs = require('disconnect').Client;
         let artists;
@@ -41,7 +43,6 @@ class App extends React.Component {
                data: result.results,
             });
             console.log(this.state.data)
-            console.log(this.state.pages)
 
 
         }).catch(err => console.log(err))
@@ -49,18 +50,30 @@ class App extends React.Component {
 
     }
 
+
+
     handlePageClick = (e) => {
         const selectedPage = e.selected;
         const currentPage = selectedPage * this.state.per_page;
 
 
         this.setState({
-            currentPage: selectedPage,
+            currentPage: currentPage,
+
 
         }, () => {
             this.componentDidMount()
         }
         )
+    }
+
+    togglePopup = (e) => {
+        this.setState({
+            seen: !this.state.seen
+        })
+        const onClick = () => {
+        }
+        console.log(e)
     }
 
     render() {
@@ -69,13 +82,20 @@ class App extends React.Component {
             <div>
                 <header>
                     <h1>Discogs_api</h1>
+                    <h2>select a release</h2>
                 </header>
-
+                {this.state.seen ? <Popup toggle={this.togglePopup}/> : null}
                 {
                     this.state.data.map(
-                        artist => (
-                            <article>
-                                <h3>{artist.title}</h3>
+                        release => (
+                            <article key={release.id} onClick={this.togglePopup}>
+                                <p>{release.title}</p>
+                                <img src={release.thumb} alt={release.id}/>
+                                <div className="description">
+                                    <p>{release.country}</p>
+                                    <p>{release.year}</p>
+                                    <p>{release.genre}</p>
+                                </div>
                             </article>)
                     )
                 }
