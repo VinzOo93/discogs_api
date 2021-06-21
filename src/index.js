@@ -1,9 +1,11 @@
-import React  from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-import  ReactPaginate from  'react-paginate';
+import ReactPaginate from 'react-paginate';
 import Popup from "./Popup";
+
+
 
 export default class App extends React.Component {
 
@@ -23,7 +25,7 @@ export default class App extends React.Component {
     }
     componentDidMount() {
         const Discogs = require('disconnect').Client;
-        let artists;
+        let releases;
 
         const db = new Discogs({
 
@@ -37,12 +39,11 @@ export default class App extends React.Component {
                         console.log(result);
                     }
                 )*/
-        artists = db.search('', {type: this.state.type, page: this.state.currentPage , pages: this.state.pages, per_page: this.state.per_page});
-        artists.then((result) => {
+        releases = db.search('', {type: this.state.type, page: this.state.currentPage , pages: this.state.pages, per_page: this.state.per_page});
+        releases.then((result) => {
             this.setState({
                data: result.results,
             });
-            console.log(this.state.data)
 
 
         }).catch(err => console.log(err))
@@ -67,12 +68,20 @@ export default class App extends React.Component {
         )
     }
 
-    togglePopup = (e) => {
+    togglePopup : string = (e) => {
         this.setState({
             seen: !this.state.seen
         });
-        console.log(e)
+        if (this.state.seen === false) {
+            let id = e.currentTarget.id
+            this.setState({
+                id: id
+                })
+        console.log(this.state.id)
+
+        }
     }
+
 
     render() {
 
@@ -82,13 +91,14 @@ export default class App extends React.Component {
                     <h1>Discogs_api</h1>
                     <h2>select a release</h2>
                 </header>
-                {this.state.seen ? <Popup toggle={this.togglePopup}/> : null}
+                {this.state.seen ? <Popup children={this.state.id} toggle={this.togglePopup}/> : null}
                 {
                     this.state.data.map(
                         release => (
-                            <article key={release.id} onClick={this.togglePopup}>
+                            <article>
                                 <p>{release.title}</p>
                                 <img src={release.thumb} alt={release.id}/>
+                                <button id={release.id} onClick={this.togglePopup}> show more</button>
                                 <div className="description">
                                     <p>{release.country}</p>
                                     <p>{release.year}</p>
