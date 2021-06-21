@@ -7,7 +7,7 @@ import Popup from "./Popup";
 
 
 
-export default class App extends React.Component {
+export default class Home extends React.Component {
 
 
     constructor(props) {
@@ -32,13 +32,7 @@ export default class App extends React.Component {
             consumerKey: 'HFtgfAjtghmkzzOluQKH',
             consumerSecret: 'ONVjfHqqlUKMQcIRpubJOVpOjYbbEVku'
         }).database();
-        /*        releases = db.getRelease(3)
-                releases.then(
-                    (result) => {
-                        this.setState({releases: result});
-                        console.log(result);
-                    }
-                )*/
+
         releases = db.search('', {type: this.state.type, page: this.state.currentPage , pages: this.state.pages, per_page: this.state.per_page});
         releases.then((result) => {
             this.setState({

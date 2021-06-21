@@ -49,7 +49,7 @@ export default class Popup extends Component {
 
                     }
                     <div className="info">
-                        <p>Price : {this.state.release.lowest_price}</p>
+                        <p>Price : {this.state.release.lowest_price}$</p>
                         <p>Description : {this.state.release.notes}</p>
                         <p>Released : {this.state.release.released}</p>
                     </div>
