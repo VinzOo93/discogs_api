@@ -1,7 +1,7 @@
-import  firebase from "firebase/app";
+import firebase from "firebase/app";
 import "firebase/auth";
 
-const  app = firebase.initializeApp({
+const app = firebase.initializeApp({
     apiKey: "AIzaSyBaWA3sEwVT7BGZetA3IPy934nlobWG-lI",
     authDomain: "discogsapi-892b3.firebaseapp.com",
     projectId: "discogsapi-892b3",

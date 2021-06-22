@@ -5,14 +5,14 @@ import './form.css';
 import {AuthContext} from "./Auth";
 
 const Login = ({history}) => {
-    const  handleLogin = useCallback(
+    const handleLogin = useCallback(
         async event => {
             event.preventDefault();
             const {email, password} = event.target.elements;
             try {
-                    await  app
-                        .auth()
-                        .signInWithEmailAndPassword(email.value, password.value);
+                await app
+                    .auth()
+                    .signInWithEmailAndPassword(email.value, password.value);
             } catch (error) {
                 alert(error);
             }
@@ -20,10 +20,10 @@ const Login = ({history}) => {
         [history]
     );
 
-    const  {currentUser} = useContext(AuthContext);
+    const {currentUser} = useContext(AuthContext);
 
     if (currentUser) {
-        return <Redirect to="/" />
+        return <Redirect to="/"/>
     }
 
     return (

@@ -7,11 +7,12 @@ export default class Popup extends Component {
     constructor(props) {
         super(props);
         this.state = {
-        release: [],
+            release: [],
             tracks: [],
             images: []
         }
     }
+
     handleClick = () => this.props.toggle();
 
     componentDidMount(id) {
@@ -41,15 +42,16 @@ export default class Popup extends Component {
 
             <div className="popup-box">
                 <div className="box">
-                    <span className="close-icon" onClick={this.handleClick}  >x</span>
-                    <h1>Title : {this.state.release.title} - Artist: {this.state.release.artists_sort}</h1>
+                    <span className="close-icon" onClick={this.handleClick}>x</span>
+                    <h1 className={"title"}>Title : {this.state.release.title} -
+                        Artist: {this.state.release.artists_sort}</h1>
                     {this.state.images.map(img => (
-                        <img src={img.uri} alt={this.state.release.title}/>
+                        <img className={"img-popup"} src={img.uri} alt={this.state.release.title}/>
                     ))
 
                     }
                     <div className="info">
-                        <p>Price : {this.state.release.lowest_price}$</p>
+                        <p>Price : <strong>{this.state.release.lowest_price}$</strong></p>
                         <p>Description : {this.state.release.notes}</p>
                         <p>Released : {this.state.release.released}</p>
                     </div>
@@ -58,12 +60,13 @@ export default class Popup extends Component {
                         <ul>
                             {
                                 this.state.tracks.map(track => (
-                                    <li> title : {track.title}  <a target={"_blank"} href={track.uri}> - Video</a></li>
+                                    <li> title : {track.title}
+                                        <button target={"_blank"} href={track.uri}>YouTube</button>
+                                    </li>
                                 ))
                             }
                         </ul>
                     </div>
-
                 </div>
             </div>
         );

@@ -1,13 +1,14 @@
 import React, {useCallback} from "react";
-import  {withRouter} from  "react-router-dom"
+import {withRouter} from "react-router-dom"
 import app from "./Base";
 import './form.css';
-const SignUp = ({history})=> {
-    const  handleSignUp = useCallback(async  event => {
+
+const SignUp = ({history}) => {
+    const handleSignUp = useCallback(async event => {
         event.preventDefault()
         const {email, password} = event.target.elements;
         try {
-            await  app
+            await app
                 .auth()
                 .createUserWithEmailAndPassword(email.value, password.value);
             history.push("/");

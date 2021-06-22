@@ -8,7 +8,6 @@ import App from "./App";
 import app from "./Base";
 
 
-
 export default class Home extends React.Component {
 
 
@@ -25,6 +24,7 @@ export default class Home extends React.Component {
         this.togglePopup = this.togglePopup.bind(this)
 
     }
+
     componentDidMount() {
         const Discogs = require('disconnect').Client;
         let releases;
@@ -35,10 +35,15 @@ export default class Home extends React.Component {
             consumerSecret: 'ONVjfHqqlUKMQcIRpubJOVpOjYbbEVku'
         }).database();
 
-        releases = db.search('', {type: this.state.type, page: this.state.currentPage , pages: this.state.pages, per_page: this.state.per_page});
+        releases = db.search('', {
+            type: this.state.type,
+            page: this.state.currentPage,
+            pages: this.state.pages,
+            per_page: this.state.per_page
+        });
         releases.then((result) => {
             this.setState({
-               data: result.results,
+                data: result.results,
             });
 
 
@@ -51,16 +56,16 @@ export default class Home extends React.Component {
 
 
         this.setState({
-            currentPage: currentPage,
+                currentPage: currentPage,
 
 
-        }, () => {
-            this.componentDidMount()
-        }
+            }, () => {
+                this.componentDidMount()
+            }
         )
     }
 
-    togglePopup : string = (e) => {
+    togglePopup: string = (e) => {
         this.setState({
             seen: !this.state.seen
         });
@@ -68,8 +73,8 @@ export default class Home extends React.Component {
             let id = e.currentTarget.id
             this.setState({
                 id: id
-                })
-        console.log(this.state.id)
+            })
+            console.log(this.state.id)
 
         }
     }
