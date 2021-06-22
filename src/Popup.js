@@ -58,7 +58,7 @@ export default class Popup extends Component {
                         <ul>
                             {
                                 this.state.tracks.map(track => (
-                                    <li> title : {track.title}  <a target={"_blank"} href={track.uri}>Video</a></li>
+                                    <li> title : {track.title}  <a target={"_blank"} href={track.uri}> - Video</a></li>
                                 ))
                             }
                         </ul>

@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
@@ -45,10 +45,6 @@ export default class Home extends React.Component {
         }).catch(err => console.log(err))
     }
 
-
-
-
-
     handlePageClick = (e) => {
         const selectedPage = e.selected;
         const currentPage = selectedPage * this.state.per_page;
@@ -78,32 +74,35 @@ export default class Home extends React.Component {
         }
     }
 
-
     render() {
 
         return (
             <div>
                 <header>
-                    <h1>Discogs_api</h1>
-                    <h2>select a release</h2>
-                    <button onClick={() => app.auth().signOut()}>Sign out</button>
+                    <div className="title">
+                        <h1>Discogs_api</h1>
+                        <a className={"sign-out"} onClick={() => app.auth().signOut()}>Sign out</a>
+                    </div>
                 </header>
                 {this.state.seen ? <Popup children={this.state.id} toggle={this.togglePopup}/> : null}
-                {
-                    this.state.data.map(
-                        release => (
-                            <article>
-                                <p>{release.title}</p>
-                                <img src={release.thumb} alt={release.id}/>
-                                <button id={release.id} onClick={this.togglePopup}> show more</button>
-                                <div className="description">
-                                    <p>{release.country}</p>
-                                    <p>{release.year}</p>
-                                    <p>{release.genre}</p>
-                                </div>
-                            </article>)
-                    )
-                }
+                <div className="container-grid">
+                    {
+                        this.state.data.map(
+                            release => (
+                                <article>
+                                    <h3>{release.title}</h3>
+                                    <img className={"thumb"} src={release.thumb} alt={release.id}/>
+                                    <div className="description">
+                                        <button id={release.id} onClick={this.togglePopup}> show more</button>
+                                        <p className={"info"}>{release.country}</p>
+                                        <p className={"info"}>{release.year}</p>
+                                        <p className={"info"}>{release.genre}</p>
+                                    </div>
+                                </article>)
+                        )
+                    }
+                </div>
+
                 <footer>
                     <ReactPaginate
                         previousLabel={"prev"}
