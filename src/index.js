@@ -86,7 +86,6 @@ export default class Home extends React.Component {
                 <header>
                     <h1>Discogs_api</h1>
                     <h2>select a release</h2>
-                    <h3>Welcome {currentUser.displayName}</h3>
                     <button onClick={() => app.auth().signOut()}>Sign out</button>
                 </header>
                 {this.state.seen ? <Popup children={this.state.id} toggle={this.togglePopup}/> : null}
