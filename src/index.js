@@ -1,9 +1,11 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 import ReactPaginate from 'react-paginate';
 import Popup from "./Popup";
+import App from "./App";
+import app from "./Base";
 
 
 
@@ -41,9 +43,9 @@ export default class Home extends React.Component {
 
 
         }).catch(err => console.log(err))
-
-
     }
+
+
 
 
 
@@ -84,6 +86,8 @@ export default class Home extends React.Component {
                 <header>
                     <h1>Discogs_api</h1>
                     <h2>select a release</h2>
+                    <h3>Welcome {currentUser.displayName}</h3>
+                    <button onClick={() => app.auth().signOut()}>Sign out</button>
                 </header>
                 {this.state.seen ? <Popup children={this.state.id} toggle={this.togglePopup}/> : null}
                 {
